@@ -23,7 +23,7 @@ specialtiesController.postSpecialty = async (req, res) => {
       return res.status(400).json({ message: "Especialidad ya existe" });
     }
 
-    const newSpecialty = specialtiesModel(req.body);
+    const newSpecialty = new specialtiesModel(req.body);
 
     await newSpecialty.save();
 

@@ -10,12 +10,12 @@
 import { Schema, model } from "mongoose";
 
 const appointmentSchema = new Schema({
-    patient_id: {Type: String},
-    specialty_id:{Type: String},
-    appointmentDate: {Type: Date},
-    reason: {Type: String},
-    status: {Type: String},
-    observations: {Type: String}
+    patient_id: {type: String},
+    specialty_id:{type: String},
+    appointmentDate: {type: Date},
+    reason: {type: String},
+    status: {type: String},
+    observations: {type: String}
 },{
     timestamps: true,
     strict: false

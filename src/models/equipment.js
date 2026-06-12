@@ -15,17 +15,17 @@
 import { Schema, model } from "mongoose";
 
 const equipmentSchema = new Schema({
-    equipmentName: {Type: String},
-    description: {Type: String},
-    brand: {Type: String},
-    model: {Type: String},
-    purchaseDate: {Type: Date},
-    maintanceDate: {Type: Date},
-    condition: {Type: String},
-    image: {Type: String},
-    public_id: {Type: String},
-    status: {Type: String},
-    isAvailable: {Type: String}
+    equipmentName: {type: String},
+    description: {type: String},
+    brand: {type: String},
+    model: {type: String},
+    purchaseDate: {type: Date},
+    maintanceDate: {type: Date},
+    condition: {type: String},
+    image: {type: String},
+    public_id: {type: String},
+    status: {type: String},
+    isAvailable: {type: String}
 },{
     timestamps: true,
     strict: false

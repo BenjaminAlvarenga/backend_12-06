@@ -7,9 +7,9 @@
 import { Schema, model } from "mongoose";
 
 const specialtiesSchema = new Schema({
-    specialtyName: {Type: String},
-    description: {Type: String},
-    isAvailable: {Type: Boolean}
+    specialtyName: {type: String},
+    description: {type: String},
+    isAvailable: {type: Boolean}
 },{
     timestamps: true,
     strict: false

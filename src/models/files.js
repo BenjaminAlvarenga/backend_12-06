@@ -9,10 +9,10 @@ import { Schema, model } from "mongoose";
 
 const filesSchema = new Schema(
   {
-    patient_id: {Type: String},
-    diagnosis: { Type: String },
-    medications: [{ medications: { Type: String } }],
-    medicalNotes: { Type: String },
+    patient_id: {type: String},
+    diagnosis: { type: String },
+    medications: [{ medications: { type: String } }],
+    medicalNotes: { type: String },
   },
   {
     timestamps: true,

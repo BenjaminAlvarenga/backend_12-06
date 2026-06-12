@@ -16,24 +16,29 @@
 
 import { Schema, model } from "mongoose";
 
-const patientSchema = new Schema({
-    name:{Type: String},
-    lastName: {Type: String},
-    email: {Type: String},
-    password: {Type: String},
-    birthDate: {Type: Date},
-    phone: {Type: String},
-    address: {Type: String},
-    bloodType: {Type: String},
-    phoneEmergencyContacts: [{phone: {Type:String}}],
-    profilePhoto: {Type: String},
-    public_id: {Type: String},
-    isVerified: {Type: Boolean},
-    loginAttempts: {Type: Number},
-    timeout: {Type: Date}
-},{
+const patientSchema = new Schema(
+  {
+    name: { type: String },
+    lastName: { type: String },
+    email: { type: String },
+    password: { type: String },
+    birthDate: { type: Date },
+    phone: { type: String },
+    address: { type: String },
+    bloodType: { type: String },
+    phoneEmergencyContacts: [
+      { phone: { type: String }, nameEmergencyContact: { type: String } },
+    ],
+    image: { type: String },
+    public_id: { type: String },
+    isVerified: { type: Boolean },
+    loginAttempts: { type: Number },
+    timeout: { type: Boolean },
+  },
+  {
     timestamps: true,
-    strict: false
-})
+    strict: false,
+  },
+);
 
-export default model("Patients", patientSchema)
+export default model("Patients", patientSchema);

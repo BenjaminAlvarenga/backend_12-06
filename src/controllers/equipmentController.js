@@ -1,8 +1,9 @@
 import equipmentModel from "../models/equipment.js";
+import { v2 as cloudinary } from "cloudinary";
 
 const equipmentController = {};
 
-equipmentController.getSpecialties = async (req, res) => {
+equipmentController.getEquipment = async (req, res) => {
   try {
     const specialties = await equipmentModel.find();
     return res.json(specialties);
@@ -12,7 +13,7 @@ equipmentController.getSpecialties = async (req, res) => {
   }
 };
 
-equipmentController.postSpecialty = async (req, res) => {
+equipmentController.postEquipment = async (req, res) => {
   try {
     const {
       equipmentName,
@@ -22,26 +23,38 @@ equipmentController.postSpecialty = async (req, res) => {
       purchaseDate,
       maintanceDate,
       condition,
-      image,
-      public_id,
       status,
       isAvailable,
     } = req.body;
 
-    const newSpecialty = equipmentModel(req.body);
+    const newEquipment = new equipmentModel({
+      equipmentName,
+      description,
+      brand,
+      model,
+      purchaseDate,
+      maintanceDate,
+      condition,
+      image: req.file.path,
+      public_id: req.file.filename,
+      status,
+      isAvailable,
+    });
 
-    await newSpecialty.save();
+    await newEquipment.save();
 
-    return res.status(200).json(newSpecialty);
+    return res.status(200).json(newEquipment);
   } catch (error) {
-    console.log("Error al ingresar una especialidad" + error);
+    console.log("Error al ingresar un equipo " + error + req.body);
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };
 
-equipmentController.putSpecialty = async (req, res) => {
+equipmentController.putEquipment = async (req, res) => {
   try {
-    const {
+    const equipmentFound = await equipmentModel.findById(req.params.id);
+
+    const updatedEquipment = new equipmentModel({
       equipmentName,
       description,
       brand,
@@ -49,26 +62,28 @@ equipmentController.putSpecialty = async (req, res) => {
       purchaseDate,
       maintanceDate,
       condition,
-      image,
-      public_id,
       status,
       isAvailable,
-    } = req.body;
+    });
 
-    await equipmentModel.findByIdAndUpdate(req.params.id, req.body, {
+    if (req.file) {
+      await cloudinary.uploader.destroy(equipmentFound.public_id);
+
+      updatedEquipment.image = req.file.path;
+      updatedEquipment.public_id = req.file.filename;
+    }
+
+    await equipmentModel.findByIdAndUpdate(req.params.id, updatedEquipment, {
       new: true,
     });
 
     return res
       .status(200)
-      .json({ message: "Especialidad actualizada con exito" });
-  } catch (error) {
-    console.log("Error al actualizar la especialidad " + error);
-    return res.status(500).json({ message: "Internal Server Error" });
-  }
+      .json({ message: "Equipo actualizado " + updatedEquipment });
+  } catch (error) {}
 };
 
-equipmentController.deleteSpecialty = async (req, res) => {
+equipmentController.deleteEquipment = async (req, res) => {
   try {
     const deleted = await equipmentModel.findByIdAndDelete(req.params.id);
 
