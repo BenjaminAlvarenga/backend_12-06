@@ -80,7 +80,10 @@ equipmentController.putEquipment = async (req, res) => {
     return res
       .status(200)
       .json({ message: "Equipo actualizado " + updatedEquipment });
-  } catch (error) {}
+  } catch (error) {
+    console.log("Error" + error)
+    return res.status(500).json({message: "Internal Server Error"})
+  }
 };
 
 equipmentController.deleteEquipment = async (req, res) => {
@@ -88,12 +91,12 @@ equipmentController.deleteEquipment = async (req, res) => {
     const deleted = await equipmentModel.findByIdAndDelete(req.params.id);
 
     if (!deleted) {
-      return res.status(404).json({ message: "Especialidad no encontrada" });
+      return res.status(404).json({ message: "Equipo no encontrada" });
     }
 
     return res
       .status(200)
-      .json({ message: "Especialidad eliminada con exito" });
+      .json({ message: "Equipo eliminada con exito" });
   } catch (error) {
     console.log("Error al eliminar la especialidad" + error);
     return res.status(500).json({ message: "Internal Server Error" });

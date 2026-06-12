@@ -4,7 +4,7 @@ import { config } from "./config.js";
 
 async function main(){
     try {
-        app.listen(4000)
+        app.listen(config.port.PORT)
         console.log(`Running on port ${config.port.PORT}`)
     } catch (error) {
         console.log("Error al iniciar el puerto")

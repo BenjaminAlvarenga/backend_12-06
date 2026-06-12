@@ -21,7 +21,7 @@ filesController.postFile = async (req, res) => {
       return res.status(400).json({ message: "Expediente ya existe" });
     }
 
-    const newSpecialty = filesModel(req.body);
+    const newSpecialty = new filesModel(req.body);
 
     await newSpecialty.save();
 

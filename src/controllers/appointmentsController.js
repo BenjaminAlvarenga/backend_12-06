@@ -7,7 +7,7 @@ appointmentsController.getSpecialties = async (req, res) => {
     const specialties = await appointmentsModel.find();
     return res.json(specialties);
   } catch (error) {
-    console.log("Error al llamar a las especialidades" + error);
+    console.log("Error al llamar a las citas" + error);
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };
@@ -23,18 +23,20 @@ appointmentsController.postSpecialty = async (req, res) => {
       observations,
     } = req.body;
 
-    const filesExists = await appointmentsModel.findOne({ patient_id });
-    if (specialtyExists) {
-      return res.status(400).json({ message: "Especialidad ya existe" });
-    }
-
-    const newSpecialty = appointmentsModel(req.body);
+    const newSpecialty = new appointmentsModel({
+      patient_id,
+      specialty_id,
+      appointmentDate,
+      reason,
+      status,
+      observations,
+    });
 
     await newSpecialty.save();
 
     return res.status(200).json(newSpecialty);
   } catch (error) {
-    console.log("Error al ingresar una especialidad" + error);
+    console.log("Error al ingresar una cita" + error);
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };
@@ -54,9 +56,7 @@ appointmentsController.putSpecialty = async (req, res) => {
       new: true,
     });
 
-    return res
-      .status(200)
-      .json({ message: "Especialidad actualizada con exito" });
+    return res.status(200).json({ message: "Cita actualizada con exito" });
   } catch (error) {
     console.log("Error al actualizar la especialidad " + error);
     return res.status(500).json({ message: "Internal Server Error" });
@@ -68,14 +68,12 @@ appointmentsController.deleteSpecialty = async (req, res) => {
     const deleted = await appointmentsModel.findByIdAndDelete(req.params.id);
 
     if (!deleted) {
-      return res.status(404).json({ message: "Especialidad no encontrada" });
+      return res.status(404).json({ message: "Cita no encontrada" });
     }
 
-    return res
-      .status(200)
-      .json({ message: "Especialidad eliminada con exito" });
+    return res.status(200).json({ message: "Cita eliminada con exito" });
   } catch (error) {
-    console.log("Error al eliminar la especialidad" + error);
+    console.log("Error al eliminar la cita" + error);
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };

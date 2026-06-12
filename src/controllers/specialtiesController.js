@@ -3,9 +3,7 @@ import specialtiesModel from "../models/specialties.js";
 const specialtiesController = {};
 
 specialtiesController.getSpecialties = async (req, res) => {
-    console.log("Fuck u")
   try {
-    console.log("Nigga im here")
     const specialties = await specialtiesModel.find();
     return res.json(specialties);
   } catch (error) {
